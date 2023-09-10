@@ -71,9 +71,6 @@ export class CaptchaComponent implements OnInit {
             var ctx = captcahCanvas.getContext('2d');
             ctx.fillStyle = this.config.back.solid;
             ctx.fillRect(0, 0, captcahCanvas.width, captcahCanvas.height);
-            // ctx.font = '10px Arial';
-            // ctx.fillStyle = "#000000";
-            // ctx.fillText("Powered By BinsSoft", captcahCanvas.width - 95, captcahCanvas.height - 5);
             ctx.beginPath();
             if (this.config.type !== 3) {
                 captcahCanvas.style.letterSpacing = 15 + 'px';
