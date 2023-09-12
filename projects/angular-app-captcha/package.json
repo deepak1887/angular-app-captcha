@@ -1,0 +1,23 @@
+{
+  "name": "angular-app-captcha",
+  "version": "1.0.2",
+  "description": "Simple captcha for angular applicatons",
+  "keywords": ["captcha", "anti-bot", "ishuman", "validatehuman"],
+  "peerDependencies": {
+    "@angular/common": "^15.2.0",
+    "@angular/core": "^15.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepak1887/angular-app-captcha.git"
+  },
+  "author": "Deepak",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/deepak1887/angular-app-captcha/issues"
+  },
+  "homepage": "https://github.com/deepak1887/angular-app-captcha#readme"
+}
