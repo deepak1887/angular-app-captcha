@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { CaptchaConfig, CaptchaService } from './captcha';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CaptchaConfig, CaptchaService, CaptchaModule } from './captcha';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, FormsModule, CaptchaModule],
   templateUrl: './app.component.html',
   styleUrls: ['app.component.css']
 })

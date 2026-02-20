@@ -1,9 +1,13 @@
 import { Component, OnChanges, OnInit } from "@angular/core"; 
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 import { CaptchaService } from "./captcha.service";
 import { CaptchaConfig } from "./captcha.config";
 
 @Component({
     selector: 'app-captcha',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
     template: '<div class="captcha-container {{config.cssClass}}">\n <canvas id="captcahCanvas" width="316" height="80"></canvas>\n \n\n <div class="captcha-actions" *ngIf="config.type != 3">\n  <input type="text" [(ngModel)]="captch_input" />\n  <input type="button" value="Check" (click)="checkCaptcha()" />\n  <a href="javascript:void(0)" class="cpt-btn" (click)="playCaptcha()">\uD83D\uDD08</a>\n    <a href="javascript:void(0)" class="cpt-btn reload" (click)="createCaptcha()">&#x21bb;</a>\n</div>\n</div>',
     styles: [".captcha-container{width:315px;box-shadow:1px 1px 1px #ccc}.captcha-actions input[type=text]{padding:5px;border:1px solid #CCC;border-radius:10px 0 0 10px;outline:none}.captcha-actions input[type=button]{outline:none;padding:6px;border:none;background:#CCC;border-radius:0 10px 10px 0}.captcha-actions a{padding:10px;cursor:pointer;font-size:15px;font-weight:bold;text-decoration:none;color:#222}.captcha-container .powered-by{font-size:11px;font-family:Arial;color:#ccc;padding:5px;display:block!important}\n"]
 })

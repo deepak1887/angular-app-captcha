@@ -60,9 +60,10 @@ angular-app-captcha/
 ## Installation
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- Angular CLI v16.2.3
-- Angular v16.2.0
+- Node.js (v18 or higher recommended)
+- Angular CLI v21.1.0
+- Angular v21.1.0
+- TypeScript v5.9.0 or higher
 
 ### Install Dependencies
 
@@ -72,7 +73,7 @@ npm install
 
 ## Usage
 
-### 1. Import the Module
+### 1. Import the Module (For Module-based Applications)
 
 In your `app.module.ts`:
 
@@ -93,7 +94,25 @@ import { FormsModule } from '@angular/forms';
 export class AppModule { }
 ```
 
-### 2. Use the Component
+### 2. Use the Component (Standalone)
+
+The `AppCaptchaComponent` is now a standalone component that can be imported directly:
+
+In your standalone component or module:
+
+```typescript
+import { AppCaptchaComponent } from 'angular-app-captcha';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [AppCaptchaComponent],
+  template: `<angular-app-captcha></angular-app-captcha>`
+})
+export class AppComponent { }
+```
+
+### 3. Use the Component in Templates
 
 In your template (`.html`):
 
@@ -227,31 +246,47 @@ npm test
 ## Project Dependencies
 
 ### Runtime Dependencies
-- `@angular/animations`: ^16.2.0
-- `@angular/common`: ^16.2.0
-- `@angular/compiler`: ^16.2.0
-- `@angular/core`: ^16.2.0
-- `@angular/forms`: ^16.2.0
-- `@angular/platform-browser`: ^16.2.0
-- `@angular/platform-browser-dynamic`: ^16.2.0
-- `@angular/router`: ^16.2.0
+- `@angular/animations`: ^21.1.0
+- `@angular/common`: ^21.1.0
+- `@angular/compiler`: ^21.1.0
+- `@angular/core`: ^21.1.0
+- `@angular/forms`: ^21.1.0
+- `@angular/platform-browser`: ^21.1.0
+- `@angular/platform-browser-dynamic`: ^21.1.0
+- `@angular/router`: ^21.1.0
 - `rxjs`: ~7.8.0
-- `tslib`: ^2.3.0
-- `zone.js`: ~0.13.0
+- `tslib`: ^2.6.0
+- `zone.js`: ~0.15.0
 
 ### Development Dependencies
-- `@angular-devkit/build-angular`: ^16.2.3
-- `@angular/cli`: ~16.2.3
-- `@angular/compiler-cli`: ^16.2.0
-- `@types/jasmine`: ~4.3.0
-- `jasmine-core`: ~4.6.0
+- `@angular-devkit/build-angular`: ^21.1.0
+- `@angular/cli`: ~21.1.0
+- `@angular/compiler-cli`: ^21.1.0
+- `@types/jasmine`: ~5.1.0
+- `jasmine-core`: ~5.1.0
 - `karma`: ~6.4.0
 - `karma-chrome-launcher`: ~3.2.0
 - `karma-coverage`: ~2.2.0
 - `karma-jasmine`: ~5.1.0
 - `karma-jasmine-html-reporter`: ~2.1.0
-- `ng-packagr`: ^16.2.0
-- `typescript`: ~5.1.3
+- `ng-packagr`: ^21.1.0
+- `typescript`: ~5.9.0
+
+## Recent Updates (v1.1.1)
+
+### Angular 21 Migration
+- **Upgraded to Angular 21.1.0** from Angular 16.2.0
+- **TypeScript updated** to v5.9.0
+- **Standalone Components**: `AppCaptchaComponent` is now a standalone component
+- **Module Export**: `AppCaptchaModule` now imports the standalone component for backward compatibility
+- **ModuleResolution**: Updated from 'node' to 'bundler' in tsconfig for better ESM support
+- **Zone.js**: Updated to v0.15.0
+
+### Key Changes
+- The library now fully supports Angular's standalone component architecture
+- Existing module-based applications continue to work through the `AppCaptchaModule`
+- All dependencies updated to their latest stable versions compatible with Angular 21
+- Improved build performance with ng-packagr 21
 
 ## Version
 

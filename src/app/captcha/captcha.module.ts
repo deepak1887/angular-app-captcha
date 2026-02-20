@@ -6,16 +6,14 @@ import { CaptchaService } from "./captcha.service";
 import { CaptchaConfig } from "./captcha.config";
 
 @NgModule({
-    declarations:[
-        CaptchaComponent
-    ],
     providers:[
         CaptchaService,
         CaptchaConfig
     ],
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        CaptchaComponent
     ],
     exports:[
         CaptchaComponent
