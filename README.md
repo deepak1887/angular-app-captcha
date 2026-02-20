@@ -1,27 +1,285 @@
-# Angularappcaptcha
+# Angular App Captcha
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
+A simple, lightweight, and customizable CAPTCHA library for Angular applications. This library provides three types of CAPTCHA verification to protect your application from automated bot attacks.
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+**Angular App Captcha** is an Angular library designed to integrate CAPTCHA functionality into your applications with minimal setup. It supports multiple CAPTCHA types including text-based, math-based, and interactive verification modes.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Multiple CAPTCHA Types**:
+  - Type 1: Text-based CAPTCHA (random alphanumeric characters)
+  - Type 2: Math-based CAPTCHA (simple arithmetic problems)
+  - Type 3: Interactive "I'm not a robot" checkbox verification
 
-## Build
+- **Customizable Configuration**:
+  - Font customization (family, size, color)
+  - Background styling (solid color, stroke effects)
+  - Custom CSS classes for styling
+  - Adjustable CAPTCHA code length
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Audio Support**: Text-to-speech functionality for accessibility (read CAPTCHA code aloud)
 
-## Running unit tests
+- **Easy Integration**: Simple module import and component usage
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **RxJS Observable Support**: Real-time CAPTCHA status updates via observables
 
-## Running end-to-end tests
+## Project Structure
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+angular-app-captcha/
+├── projects/
+│   └── angular-app-captcha/          # Library source code
+│       ├── src/
+│       │   ├── lib/
+│       │   │   ├── angular-app-captcha.component.ts       # Main CAPTCHA component
+│       │   │   ├── angular-app-captcha.component.spec.ts  # Component tests
+│       │   │   ├── angular-app-captcha.service.ts         # CAPTCHA status service
+│       │   │   ├── angular-app-captcha.service.spec.ts    # Service tests
+│       │   │   ├── angular-app-captcha.module.ts          # Library module
+│       │   │   ├── angular-app-captcha.config.ts          # Configuration interface
+│       │   │   └── public-api.ts                          # Public API exports
+│       │   └── tsconfig files
+│       ├── ng-package.json
+│       └── package.json
+├── src/
+│   ├── app/
+│   │   ├── app.component.ts          # Demo application
+│   │   ├── app.module.ts
+│   │   └── captcha/                  # Local captcha implementation
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.scss
+├── angular.json                      # Angular CLI configuration
+├── package.json                      # Project dependencies
+├── tsconfig.json
+└── README.md
+```
 
-## Further help
+## Installation
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Prerequisites
+- Node.js (v16 or higher)
+- Angular CLI v16.2.3
+- Angular v16.2.0
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+## Usage
+
+### 1. Import the Module
+
+In your `app.module.ts`:
+
+```typescript
+import { AppCaptchaModule } from 'angular-app-captcha';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppCaptchaModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+### 2. Use the Component
+
+In your template (`.html`):
+
+```html
+<angular-app-captcha></angular-app-captcha>
+```
+
+### 3. Configure the CAPTCHA
+
+In your component (`.ts`):
+
+```typescript
+import { Component } from '@angular/core';
+import { CaptchaConfig, CaptchaService } from 'angular-app-captcha';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  constructor(private captchaService: CaptchaService, private config: CaptchaConfig) {
+    // Set CAPTCHA type
+    this.config.type = 1; // 1: Text, 2: Math, 3: Interactive
+
+    // Configure font
+    this.config.font = {
+      size: '40px',
+      family: 'Arial',
+      color: '#000000'
+    };
+
+    // Configure background
+    this.config.back = {
+      solid: '#fbfbfb',
+      stroke: '' // Optional stroke pattern
+    };
+
+    // Other options
+    this.config.length = 6; // Length of captcha code
+    this.config.cssClass = 'my-custom-class'; // Custom CSS class
+
+    // Subscribe to CAPTCHA status
+    this.captchaService.captchaStatus.subscribe((status: boolean | null) => {
+      if (status === true) {
+        console.log('CAPTCHA verified successfully!');
+      } else if (status === false) {
+        console.log('CAPTCHA verification failed!');
+      }
+    });
+  }
+}
+```
+
+## Configuration Options
+
+### CaptchaConfig Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `type` | number | 1 | CAPTCHA type (1: Text, 2: Math, 3: Interactive) |
+| `length` | number | 6 | Length of the CAPTCHA code |
+| `cssClass` | string | '' | Custom CSS class for styling |
+| `font.size` | string | '40px' | Font size for CAPTCHA text |
+| `font.family` | string | 'Arial' | Font family for CAPTCHA text |
+| `font.color` | string | '#000000' | Font color for CAPTCHA text |
+| `back.solid` | string | '#fbfbfb' | Background color |
+| `back.stroke` | string | '' | Stroke pattern (leave empty for no stroke) |
+
+## CAPTCHA Types
+
+### Type 1: Text-Based CAPTCHA
+Random alphanumeric characters displayed on canvas with optional noise strokes.
+
+### Type 2: Math-Based CAPTCHA
+Simple arithmetic problems (addition/subtraction) for user verification.
+
+### Type 3: Interactive CAPTCHA
+Interactive "I'm not a robot" checkbox where users click within a checkbox to verify.
+
+## Available Methods
+
+### CaptchaComponent
+
+- `createCaptcha()`: Generates a new CAPTCHA based on the configured type
+- `playCaptcha()`: Plays audio pronunciation of the CAPTCHA code (accessibility feature)
+- `checkCaptcha()`: Validates the user input against the generated CAPTCHA code
+
+### CaptchaService
+
+- `setCaptchaStatus(code: boolean)`: Updates the CAPTCHA verification status
+- `get captchaStatus()`: Returns an Observable of the CAPTCHA status
+
+## Development
+
+### Development Server
+
+Run the development server:
+
+```bash
+npm start
+```
+
+Navigate to `http://localhost:4200/`. The application will automatically reload when you modify source files.
+
+### Build the Library
+
+To build the library for distribution:
+
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `dist/angular-app-captcha/` directory.
+
+### Watch Mode
+
+Build the library in watch mode for development:
+
+```bash
+npm run watch
+```
+
+### Running Tests
+
+Execute unit tests via Karma:
+
+```bash
+npm test
+```
+
+## Project Dependencies
+
+### Runtime Dependencies
+- `@angular/animations`: ^16.2.0
+- `@angular/common`: ^16.2.0
+- `@angular/compiler`: ^16.2.0
+- `@angular/core`: ^16.2.0
+- `@angular/forms`: ^16.2.0
+- `@angular/platform-browser`: ^16.2.0
+- `@angular/platform-browser-dynamic`: ^16.2.0
+- `@angular/router`: ^16.2.0
+- `rxjs`: ~7.8.0
+- `tslib`: ^2.3.0
+- `zone.js`: ~0.13.0
+
+### Development Dependencies
+- `@angular-devkit/build-angular`: ^16.2.3
+- `@angular/cli`: ~16.2.3
+- `@angular/compiler-cli`: ^16.2.0
+- `@types/jasmine`: ~4.3.0
+- `jasmine-core`: ~4.6.0
+- `karma`: ~6.4.0
+- `karma-chrome-launcher`: ~3.2.0
+- `karma-coverage`: ~2.2.0
+- `karma-jasmine`: ~5.1.0
+- `karma-jasmine-html-reporter`: ~2.1.0
+- `ng-packagr`: ^16.2.0
+- `typescript`: ~5.1.3
+
+## Version
+
+**Current Version**: 1.1.1
+
+## Author
+
+Deepak
+
+## License
+
+None (Custom License)
+
+## Repository
+
+GitHub: [https://github.com/deepak1887/angular-app-captcha](https://github.com/deepak1887/angular-app-captcha)
+
+## Support
+
+For issues and feature requests, please visit the [GitHub Issues](https://github.com/deepak1887/angular-app-captcha/issues) page.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues to improve this library.
+
+## Additional Resources
+
+- [Angular Documentation](https://angular.io/docs)
+- [Angular CLI Reference](https://angular.io/cli)
+- [RxJS Documentation](https://rxjs.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
